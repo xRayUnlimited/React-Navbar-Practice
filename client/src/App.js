@@ -1,21 +1,43 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import { StyleSheet, View } from 'react-native'
+import { Provider } from 'react-redux'
+import createStore from './Redux'
+/*
+* Both of the following files work for react-navigation
+* Routes will always be added and supported by modifying
+* the AppNavigation file.  Special redux actions/reducers
+* will be handled in Redux Navigation
+*   // use this to use react-navigation no redux
+*   import AppNavigation from './Navigation/AppNavigation'
+*
+*   // use this to use react-navigation with redux
+*   import ReduxNavigation from './Navigation/ReduxNavigation'
+*/
 
-class App extends Component {
+// We're going to use navigation with redux
+import ReduxNavigation from './Navigation/ReduxNavigation'
+
+// create our store
+const store = createStore()
+
+
+export default class App extends React.Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
-    );
+      <Provider store={store}>
+        <View style={styles.container}>
+          <ReduxNavigation />
+        </View>
+      </Provider>
+    )
   }
 }
 
-export default App;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  }
+})
